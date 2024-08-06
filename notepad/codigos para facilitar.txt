@@ -1,0 +1,34 @@
+
+<?php
+    require_once "conexao.php";
+    
+    $nome=$_POST['nome'];
+    $duracao=$_POST['duracao'];
+    $produtor=$_POST['produtor'];
+
+    $sql=  "INSERT INTO filmes(nome, duracao, produtor) VALUES ('$nome', '$duracao','$produtor')";
+
+    if($conexao->query($sql)){
+        echo "<p>CRIADO COM SUCESSO</p>";
+    }else{
+        echo "erro " . $sql . ' ' . $conexao->connect_error;
+    }
+    $conexao->close();
+    ?>
+
+
+
+
+<?php
+            require_once "conexao.php";
+
+            $sql = mysqli_query($conexao, "SELECT * FROM filmes")or die(mysqli_error($conexao));
+
+            while($row = mysqli_fetch_assoc($sql)){
+                echo "<tr>
+                <td>".$row['nome']."</td>
+                <td>".$row['duracao']."</td>
+                <td>".$row['produtor']."</td>
+                <td>";
+            }
+        ?>

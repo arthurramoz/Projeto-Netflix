@@ -1,0 +1,34 @@
+<?php
+
+    require_once "conexao.php";
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $nome = $_POST['nome'];
+        $duracao = $_POST['duracao'];
+        $produtor = $_POST['produtor'];
+
+        if ($nome != "" && $duracao != "" && $produtor != "") {
+            $sql = "INSERT INTO filmes(nome, duracao, produtor) VALUES ('$nome', '$duracao', '$produtor')";
+
+            if ($conexao->query($sql)) {
+                header('Location: adicionar.php');
+                exit();
+            } else {
+                echo "Erro: " . $sql . ' ' . $conexao->connect_error;
+            }
+        }
+
+        $conexao->close();
+    }
+
+    $sql = mysqli_query($conexao, "SELECT * FROM filmes") or die(mysqli_error($conexao));
+
+    while ($row = mysqli_fetch_assoc($sql)) {
+        echo "<tr>
+                <td><h3>".$row['id']."</h3></td>
+                <td><h3>".$row['nome']."</h3></td>
+                <td><h3>".$row['duracao']."</h3></td>
+                <td><h3>".$row['produtor']."</h3></td>";
+    }
+
+?>
